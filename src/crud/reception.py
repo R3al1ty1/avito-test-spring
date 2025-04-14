@@ -29,8 +29,6 @@ async def get_open_reception_db(
         SELECT id, date_time, pvz_id, status
         FROM receptions
         WHERE pvz_id = $1 AND status = 'in_progress'
-        ORDER BY DESC
-        LIMIT 1
         """,
         str(pvz_id)
     )

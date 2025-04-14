@@ -4,9 +4,9 @@ from core.db_helper import get_db_connection
 from auth.jwt import check_employee_role
 from asyncpg import Connection
 
-from src.crud.product import create_product_db
-from src.crud.pvz import get_pvz_by_id
-from src.crud.reception import get_open_reception_db
+from crud.product import create_product_db
+from crud.pvz import get_pvz_db
+from crud.reception import get_open_reception_db
 
 
 router = APIRouter(tags=["products"])
@@ -24,7 +24,7 @@ async def create_product(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid product type, must be 'электроника', 'одежда', or 'обувь'"
         )
-    pvz = await get_pvz_by_id(pvz_id=product_data.pvz_id, conn=conn)
+    pvz = await get_pvz_db(pvz_id=product_data.pvz_id, conn=conn)
     if not pvz:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

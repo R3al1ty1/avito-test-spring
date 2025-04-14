@@ -37,10 +37,15 @@ async def get_db_pool():
         await pool.close()
 
 @asynccontextmanager
-async def get_db_connection() -> AsyncGenerator[Connection | None]:
+async def get_db_conn():
     """Context manager for single database connection"""
     conn = await get_connection()
     try:
         yield conn
     finally:
         await conn.close()
+
+
+async def get_db_connection():
+    async with get_db_conn() as conn:
+        yield conn

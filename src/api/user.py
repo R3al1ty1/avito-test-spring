@@ -6,7 +6,7 @@ from auth.jwt import get_password_hash, verify_password, create_access_token
 from uuid import uuid4
 from datetime import timedelta
 
-from src.crud.user import check_user_exists_db, create_user_db, get_user_by_email_db
+from crud.user import check_user_exists_db, create_user_db, get_user_by_email_db
 
 
 router = APIRouter(tags=["user"])

@@ -3,8 +3,8 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from core.schemas.reception import ReceptionCreate, ReceptionResponse
 from core.db_helper import get_db_connection
 from auth.jwt import check_employee_role
-from src.crud.pvz import get_pvz_db
-from src.crud.reception import create_reception_db, get_open_reception_db
+from crud.pvz import get_pvz_db
+from crud.reception import create_reception_db, get_open_reception_db
 
 
 router = APIRouter(tags=["reception"])

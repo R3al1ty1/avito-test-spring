@@ -7,9 +7,9 @@ from typing import List, Optional
 from datetime import datetime
 from uuid import UUID
 
-from src.crud.product import delete_last_product_db, get_products_by_reception_id
-from src.crud.pvz import create_pvz_db, get_pvz_db, get_pvz_list_db
-from src.crud.reception import close_reception_db, get_open_reception_db, get_receptions_db
+from crud.product import delete_last_product_db, get_products_by_reception_id
+from crud.pvz import create_pvz_db, get_pvz_db, get_pvz_list_db
+from crud.reception import close_reception_db, get_open_reception_db, get_receptions_db
 
 
 router = APIRouter(tags=["pvz"])
