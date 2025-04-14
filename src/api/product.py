@@ -38,6 +38,10 @@ async def create_product(
             detail="No open reception found for this PVZ"
         )
 
-    new_product = await create_product_db()
+    new_product = await create_product_db(
+        product_type=product_data.type,
+        reception_id=reception["id"],
+        conn=conn
+    )
     
     return new_product
