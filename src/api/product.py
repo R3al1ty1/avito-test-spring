@@ -7,7 +7,8 @@ from asyncpg import Connection
 from crud.product import create_product_db
 from crud.pvz import get_pvz_db
 from crud.reception import get_open_reception_db
-
+from core.monitoring.metrics import PRODUCTS_ADDED
+from core.monitoring.logging import logger
 
 router = APIRouter(tags=["products"])
 
@@ -44,4 +45,6 @@ async def create_product(
         conn=conn
     )
     
+    PRODUCTS_ADDED.inc()  # Увеличиваем счетчик добавленных товаров
+    logger.info(f"New product of type {product_data.type} added to reception {reception['id']}")
     return new_product

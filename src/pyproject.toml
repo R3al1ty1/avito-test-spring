@@ -19,6 +19,9 @@ dependencies = [
     "pytest>=8.3.5",
     "httpx>=0.28.1",
     "pytest-cov>=6.1.1",
+    "prometheus-client>=0.20.0",
+    "prometheus-fastapi-instrumentator>=6.1.0",
+    "python-json-logger>=2.0.7"
 ]
 
 [project.optional-dependencies]

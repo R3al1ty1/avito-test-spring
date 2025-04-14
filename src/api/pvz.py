@@ -10,6 +10,8 @@ from uuid import UUID
 from crud.product import delete_last_product_db, get_products_by_reception_id
 from crud.pvz import create_pvz_db, get_pvz_db, get_pvz_list_db
 from crud.reception import close_reception_db, get_open_reception_db, get_receptions_db
+from core.monitoring.metrics import PVZ_CREATED
+from core.monitoring.logging import logger
 
 
 router = APIRouter(tags=["pvz"])
@@ -29,6 +31,8 @@ async def create_pvz(
         )
 
     new_pvz = await create_pvz_db(city=pvz_data.city, conn=conn)
+    PVZ_CREATED.inc()  # Увеличиваем счетчик созданных ПВЗ
+    logger.info(f"New PVZ created in {pvz_data.city}")
         
     return new_pvz
 
