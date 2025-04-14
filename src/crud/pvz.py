@@ -8,7 +8,7 @@ async def create_pvz_db(
     city: str,
     conn: Connection
 ) -> dict:
-    """Create a new PVZ"""
+    """Функция для создания нового ПВЗ."""
     new_pvz = await conn.fetchrow(
         """
         INSERT INTO pvz (city)
@@ -25,7 +25,7 @@ async def get_pvz_db(
     pvz_id: UUID,
     conn: Connection
 ) -> dict:
-    """Get PVZ by ID"""
+    """Функция для получения ПВЗ по ID."""
     pvz = await conn.fetchrow(
         "SELECT id, registration_date, city FROM pvz WHERE id = $1",
         str(pvz_id)
@@ -41,7 +41,7 @@ async def get_pvz_list_db(
     limit: int = 10,
     offset: int = 0
 ) -> List[dict]:
-    """Get list of PVZs with filters"""
+    """Функция для получения списка ПВЗ с фильтрацией по дате регистрации."""
     query = "SELECT id, registration_date, city FROM pvz"
     params = []
 
@@ -67,7 +67,7 @@ async def get_pvz_with_receptions_db(
     pvz_id: UUID,
     conn: Connection
 ) -> dict:
-    """Get PVZ with all its receptions and products"""
+    """Функция для получения ПВЗ с его приемками и продуктами."""
     pvz = await get_pvz_db(pvz_id=pvz_id, conn=conn)
     if not pvz:
         return None

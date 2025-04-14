@@ -7,7 +7,7 @@ async def create_user_db(
     role: str,
     conn: Connection
 ) -> dict:
-    """Create new user"""
+    """Функция для создания нового пользователя."""
     new_user = await conn.fetchrow(
         """
         INSERT INTO users (email, password_hash, role)
@@ -24,7 +24,7 @@ async def get_user_by_email_db(
     email: str,
     conn: Connection
 ) -> dict:
-    """Get user by email"""
+    """Функция для получения пользователя по email."""
     user = await conn.fetchrow(
         "SELECT id, email, password_hash, role FROM users WHERE email = $1",
         email
@@ -37,7 +37,7 @@ async def check_user_exists_db(
     email: str,
     conn: Connection
 ) -> bool:
-    """Check if user exists by email"""
+    """Функция для проверки существования пользователя по email."""
     user = await conn.fetchrow(
         "SELECT id FROM users WHERE email = $1",
         email

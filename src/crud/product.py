@@ -7,7 +7,7 @@ async def create_product_db(
     reception_id: UUID,
     conn: Connection
 ) -> dict:
-    """Create new product"""
+    """Функция создания нового продукта."""
     new_product = await conn.fetchrow(
         """
         INSERT INTO products (type, reception_id)
@@ -24,6 +24,7 @@ async def get_products_by_reception_id(
     reception_id: UUID,
     conn: Connection
 ) -> dict:
+    """Функция для получения всех продуктов по ID приемки."""
     products = await conn.fetch(
         """
         SELECT id, date_time, type, reception_id
@@ -36,11 +37,12 @@ async def get_products_by_reception_id(
 
     return products
 
+
 async def delete_last_product_db(
     reception_id: UUID,
     conn: Connection
 ) -> bool:
-    """Delete last product from reception"""
+    """Функция дял удаления последнего продукта из приемки."""
     product = await conn.fetchrow(
         """
         DELETE FROM products

@@ -17,7 +17,7 @@ async def dummy_login(
     login_data: DummyLogin,
     conn: Connection = Depends(get_db_connection)
 ):
-    """Dummy login endpoint for testing purposes."""
+    """Эндпоинт Dummy login для тестирования."""
     if login_data.role not in ["employee", "moderator"]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -41,7 +41,7 @@ async def register_user(
     user_data: UserCreate,
     conn: Connection = Depends(get_db_connection)
 ):
-    """Register a new user."""
+    """Эндпоинт регистрации нового пользователя."""
     if user_data.role not in ["employee", "moderator"]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -73,7 +73,7 @@ async def login_user(
     user_data: UserLogin,
     conn: Connection = Depends(get_db_connection)
 ):
-    """Authenticate a user and return a JWT token."""
+    """Эндпоинт для входа пользователя."""
     user = get_user_by_email_db(email=user_data.email, conn=conn)
         
     if not user or not verify_password(user_data.password, user["password_hash"]):

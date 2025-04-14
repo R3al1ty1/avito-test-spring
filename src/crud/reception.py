@@ -6,7 +6,7 @@ async def create_reception_db(
     pvz_id: UUID,
     conn: Connection
 ) -> dict:
-    """Create new reception"""
+    """Функция создания новой приемки."""
     new_reception = await conn.fetchrow(
         """
         INSERT INTO receptions (pvz_id, status)
@@ -23,7 +23,7 @@ async def get_open_reception_db(
     pvz_id: UUID,
     conn: Connection
 ) -> dict:
-    """Get open reception for PVZ"""
+    """Функция для получения открытой приемки по ID ПВЗ."""
     reception = await conn.fetchrow(
         """
         SELECT id, date_time, pvz_id, status
@@ -40,6 +40,7 @@ async def get_receptions_db(
     pvz_id: UUID,
     conn: Connection
 ) -> dict:
+    """Функция для получения всех приемок по ID ПВЗ."""
     receptions = await conn.fetch(
         """
         SELECT id, date_time, pvz_id, status
@@ -57,7 +58,7 @@ async def close_reception_db(
     reception_id: UUID,
     conn: Connection
 ) -> dict:
-    """Close reception"""
+    """Функция для закрытия приемки по ID."""
     updated_reception = await conn.fetchrow(
         """
         UPDATE receptions

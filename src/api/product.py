@@ -18,7 +18,7 @@ async def create_product(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_employee_role)
 ):
-    """Add a product to the current open reception at a PVZ."""
+    """Эндпоинт создания нового продукта."""
     if product_data.type not in ["электроника", "одежда", "обувь"]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

@@ -21,7 +21,7 @@ async def create_pvz(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_moderator_role)
 ):
-    """Create a new PVZ (Pickup Point). Only moderators can create PVZs."""
+    """Эндпоинт для создания нового ПВЗ."""
     if pvz_data.city not in ["Москва", "Санкт-Петербург", "Казань"]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -42,7 +42,7 @@ async def get_pvz_list(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_any_role)
 ):
-    """Get a list of PVZs with their receptions and products."""
+    """Эндпоинт для получения списка ПВЗ с фильтрацией по дате регистрации."""
     offset = (page - 1) * limit
     pvz_list = await get_pvz_list_db(
         conn=conn,
@@ -84,7 +84,7 @@ async def close_last_reception(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_employee_role)
 ):
-    """Close the last open reception for a PVZ."""
+    """Эндпоинт для закрытия последней приемки ПВЗ."""
     pvz = await get_pvz_db(pvz_id=pvz_id, conn=conn)
     if not pvz:
         raise HTTPException(
@@ -110,7 +110,7 @@ async def delete_last_product(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_employee_role)
 ):
-    """Delete the last added product from an open reception (LIFO)."""
+    """Эндпоинт для удаления последнего продукта из открытой приемки ПВЗ."""
     pvz = await get_pvz_db(pvz_id=pvz_id, conn=conn)
     if not pvz:
         raise HTTPException(

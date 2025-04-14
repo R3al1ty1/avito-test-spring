@@ -16,7 +16,7 @@ async def create_reception(
     conn: Connection = Depends(get_db_connection),
     user = Depends(check_employee_role)
 ):
-    """Create a new reception for products at a PVZ."""
+    """Эндпоинт создания новой приемки."""
     pvz = await get_pvz_db(pvz_id=reception_data.pvz_id, conn=conn)
     if not pvz:
         raise HTTPException(
