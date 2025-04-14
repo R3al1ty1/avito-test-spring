@@ -8,6 +8,9 @@ from core.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import router as api_router
+from api import pvz, product, reception, user
+from core.monitoring.metrics import setup_metrics
+from core.monitoring.logging import logger
 
 
 @asynccontextmanager
@@ -36,12 +39,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Подключаем метрики
+setup_metrics(app)
 
-app.include_router(
-    api_router,
-    prefix=settings.api.prefix
-)
+# Подключаем роутеры
+app.include_router(api_router, prefix=settings.api.prefix)
+app.include_router(pvz.router)
+app.include_router(product.router)
+app.include_router(reception.router)
+app.include_router(user.router)
 
+logger.info("Application started")
 
 if __name__=="__main__":
     uvicorn.run(

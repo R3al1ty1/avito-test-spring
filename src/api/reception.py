@@ -5,6 +5,8 @@ from core.db_helper import get_db_connection
 from auth.jwt import check_employee_role
 from crud.pvz import get_pvz_db
 from crud.reception import create_reception_db, get_open_reception_db
+from core.monitoring.metrics import RECEPTIONS_CREATED
+from core.monitoring.logging import logger
 
 
 router = APIRouter(tags=["reception"])
@@ -32,5 +34,7 @@ async def create_reception(
         )
     
     new_reception = await create_reception_db(pvz_id=reception_data.pvz_id, conn=conn)
+    RECEPTIONS_CREATED.inc()  # Увеличиваем счетчик созданных приёмок
+    logger.info(f"New reception created for PVZ {reception_data.pvz_id}")
     
     return new_reception
