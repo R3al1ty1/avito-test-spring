@@ -17,3 +17,7 @@ class UserResponse(UserBase):
     
 class DummyLogin(BaseModel):
     role: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str

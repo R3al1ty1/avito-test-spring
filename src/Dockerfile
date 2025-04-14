@@ -8,8 +8,8 @@ COPY pyproject.toml .
 
 RUN uv pip install --system -e .
 
-COPY . .
+RUN uv pip install --system -e ".[tests]"
 
-RUN mkdir -p uploads
+COPY . .
 
 CMD ["python", "main.py"]

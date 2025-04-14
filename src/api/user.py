@@ -1,6 +1,6 @@
 from asyncpg import Connection
 from fastapi import APIRouter, Depends, HTTPException, status
-from core.schemas.user import UserCreate, UserLogin, UserResponse, DummyLogin
+from core.schemas.user import TokenResponse, UserCreate, UserLogin, UserResponse, DummyLogin
 from core.db_helper import get_db_connection
 from auth.jwt import get_password_hash, verify_password, create_access_token
 from uuid import uuid4
@@ -12,7 +12,7 @@ from crud.user import check_user_exists_db, create_user_db, get_user_by_email_db
 router = APIRouter(tags=["user"])
 
 
-@router.post("/dummyLogin", response_model=str)
+@router.post("/dummyLogin", response_model=TokenResponse)
 async def dummy_login(
     login_data: DummyLogin,
     conn: Connection = Depends(get_db_connection)
@@ -33,7 +33,7 @@ async def dummy_login(
         expires_delta=timedelta(minutes=60)
     )
     
-    return access_token
+    return TokenResponse(access_token=access_token, token_type="bearer")
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
@@ -67,14 +67,13 @@ async def register_user(
 
     return new_user
 
-
-@router.post("/login", response_model=str)
+@router.post("/login", response_model=TokenResponse)
 async def login_user(
     user_data: UserLogin,
     conn: Connection = Depends(get_db_connection)
 ):
     """Эндпоинт для входа пользователя."""
-    user = get_user_by_email_db(email=user_data.email, conn=conn)
+    user = await get_user_by_email_db(email=user_data.email, conn=conn)
         
     if not user or not verify_password(user_data.password, user["password_hash"]):
         raise HTTPException(
@@ -93,4 +92,4 @@ async def login_user(
         expires_delta=timedelta(minutes=60)
     )
     
-    return access_token
+    return TokenResponse(access_token=access_token, token_type="bearer")

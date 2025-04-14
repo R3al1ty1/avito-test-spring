@@ -14,17 +14,9 @@ class ApiV1Prefix(BaseModel):
 
 
 class ApiPrefix(BaseModel):
-    prefix: str = "/api"
+    prefix: str = ""
 
 class Settings(BaseSettings):
-    # model_config = SettingsConfigDict(
-    #     env_file=".env",
-    #     case_sensitive=False,
-    #     env_nested_delimiter="__",
-    #     env_prefix="CONFIG__",
-    #     extra='ignore'
-    # )
-    # secret_key: str
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
 

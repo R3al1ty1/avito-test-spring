@@ -5,7 +5,7 @@ from .product import router as router_products
 from .user import router as router_user
 
 
-router = APIRouter(prefix="/v1")
+router = APIRouter()
 
 router.include_router(
     router_products,
