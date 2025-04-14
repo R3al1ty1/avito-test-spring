@@ -26,32 +26,32 @@ def test_get_pvz_list():
 
     assert isinstance(pvz_list, list)
 
-    assert pvz_list[0]["city"] == "Казань"
-    assert pvz_list[0]["id"] == "65f9855a-ecc9-4c9c-97fb-51937878e064"
+    assert pvz_list[1]["city"] == "Казань"
+    assert pvz_list[1]["id"] == "65f9855a-ecc9-4c9c-97fb-51937878e064"
     assert datetime.fromisoformat(pvz_list[0]["registration_date"].replace("Z", "+00:00"))
 
-    assert isinstance(pvz_list[0]["receptions"], list)
-    assert len(pvz_list[0]["receptions"]) == 1
+    assert isinstance(pvz_list[1]["receptions"], list)
+    assert len(pvz_list[1]["receptions"]) == 1
 
-    reception = pvz_list[0]["receptions"][0]
+    reception = pvz_list[1]["receptions"][0]
     assert reception["id"] == "9f53ae04-1ff7-415e-9a6d-8d9d2872e55f"
     assert reception["status"] == "in_progress"
     assert datetime.fromisoformat(reception["date_time"].replace("Z", "+00:00"))
 
-    assert pvz_list[1]["city"] == "Москва"
-    assert pvz_list[1]["id"] == "dfe664a4-0c81-4368-a8c6-9a6f0449de55"
-    assert datetime.fromisoformat(pvz_list[1]["registration_date"].replace("Z", "+00:00"))
+    assert pvz_list[2]["city"] == "Москва"
+    assert pvz_list[2]["id"] == "dfe664a4-0c81-4368-a8c6-9a6f0449de55"
+    assert datetime.fromisoformat(pvz_list[2]["registration_date"].replace("Z", "+00:00"))
 
-    assert len(pvz_list[1]["receptions"]) == 2
+    assert len(pvz_list[2]["receptions"]) == 2
 
-    reception1 = pvz_list[1]["receptions"][0]
+    reception1 = pvz_list[2]["receptions"][0]
     assert reception1["status"] == "in_progress"
     assert len(reception1["products"]) == 5
 
     expected_types = ["обувь", "электроника", "одежда"]
     assert set(p["type"] for p in reception1["products"]) == set(expected_types)
 
-    reception2 = pvz_list[1]["receptions"][1]
+    reception2 = pvz_list[2]["receptions"][1]
     assert reception2["status"] == "close"
     assert len(reception2["products"]) == 2
     assert set(p["type"] for p in reception2["products"]) == {"электроника", "обувь"}
